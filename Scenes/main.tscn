@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://x7kea0s7dgt5"]
+
+[ext_resource type="Script" uid="uid://dmiqw4dwngct3" path="res://Scripts/steam_networking.gd" id="1_jjgbg"]
+
+[sub_resource type="Environment" id="Environment_jjgbg"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_bo1nx"]
+
+[sub_resource type="Compositor" id="Compositor_8gbba"]
+
+[node name="Main" type="Node3D" unique_id=170903427]
+script = ExtResource("1_jjgbg")
+
+[node name="HostButton" type="Button" parent="." unique_id=1945343710]
+offset_right = 119.0
+offset_bottom = 70.0
+text = "Host"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=111224825]
+environment = SubResource("Environment_jjgbg")
+camera_attributes = SubResource("CameraAttributesPractical_bo1nx")
+compositor = SubResource("Compositor_8gbba")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=66400434]
+transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.5, 0.5, 34.940727, 15.314941, 19.917551)
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=1509949464]
+use_collision = true
+size = Vector3(100, 0.1, 100)
+
+[node name="Wall" type="CSGBox3D" parent="." unique_id=1396021491]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -10.646)
+size = Vector3(20.005, 10, 1)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=466266553]
+_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
