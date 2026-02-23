@@ -73,7 +73,6 @@ func join_lobby(lobby_id: int = 0):
 	multiplayer.multiplayer_peer = peer
 
 func _on_lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int):
-	
 	if !is_joining:
 		return
 	
