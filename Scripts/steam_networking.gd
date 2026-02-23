@@ -82,8 +82,8 @@ func _on_host_button_pressed():
 	host_lobby()
 
 
-func _on_id_prompt_text_changed(new_text):
-	join_button.disabled = (new_text.length == 0)
+func _on_id_prompt_text_changed(new_text: String) -> void:
+	join_button.disabled = (new_text.to_int() == 0)
 
 
 func _on_join_button_pressed() -> void:
