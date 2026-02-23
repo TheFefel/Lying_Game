@@ -36,4 +36,19 @@ size = Vector3(20.005, 10, 1)
 _spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
 spawn_path = NodePath("..")
 
+[node name="JoinButton" type="Button" parent="." unique_id=535946191]
+offset_top = 76.0
+offset_right = 118.0
+offset_bottom = 146.0
+disabled = true
+text = "Join"
+
+[node name="IdPrompt" type="LineEdit" parent="." unique_id=490797828]
+offset_top = 154.0
+offset_right = 119.0
+offset_bottom = 191.0
+placeholder_text = "Lobby ID"
+
 [connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="text_changed" from="IdPrompt" to="." method="_on_id_prompt_text_changed"]

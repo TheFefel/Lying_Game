@@ -81,7 +81,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if !is_multiplayer_authority():
+	if !is_multiplayer_authority(): #to only read input if you're this player
 		return
 	
 	# If freeflying, handle freefly and nothing else
