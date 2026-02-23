@@ -1,8 +1,10 @@
 extends Node
 
+@export_enum("Steam", "ENet") var net_mode: String = "Steam"
+
 var app_id : int = 480
 var lobby_id : int = 0
-var peer : SteamMultiplayerPeer
+var peer
 var is_host : bool = false
 var is_joining : bool = false
 var max_players : int = 8
@@ -16,10 +18,14 @@ const player_scene : PackedScene = preload("uid://bs72ogkvdd7d6")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	initialize_steam()
-	Steam.initRelayNetworkAccess()
-	Steam.lobby_created.connect(_on_lobby_created)
-	Steam.lobby_joined.connect(_on_lobby_joined)
+	if net_mode == "ENet":
+		peer = ENetMultiplayerPeer.new()
+	elif net_mode == "Steam":
+		peer = SteamMultiplayerPeer.new()
+		initialize_steam()
+		Steam.initRelayNetworkAccess()
+		Steam.lobby_created.connect(_on_lobby_created)
+		Steam.lobby_joined.connect(_on_lobby_joined)
 
 func initialize_steam() -> void:
 	var init_response: Dictionary = Steam.steamInitEx(app_id, true) #init Steam with app id and callbacks = true
@@ -31,8 +37,15 @@ func initialize_steam() -> void:
 		get_tree().quit()
 
 func host_lobby():
-	Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_FRIENDS_ONLY, max_players)
-	is_host = true
+	if net_mode == "ENet":
+		peer.create_server(1027)
+		multiplayer.multiplayer_peer = peer
+		multiplayer.peer_connected.connect(_add_player)
+		multiplayer.peer_disconnected.connect(_remove_player)
+		_add_player()
+	elif net_mode == "Steam":
+		Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_FRIENDS_ONLY, max_players)
+		#is_host = true
 
 func _on_lobby_created(result: int, lobby_id: int):
 	if result == Steam.Result.RESULT_OK:
@@ -49,9 +62,15 @@ func _on_lobby_created(result: int, lobby_id: int):
 		
 		print("Lobby created, lobby ID: ", lobby_id)
 
-func join_lobby(lobby_id: int):
+func join_lobby(lobby_id: int = 0):
 	is_joining = true
-	Steam.joinLobby(lobby_id)
+	
+	if net_mode == "ENet":
+		peer.create_client("127.0.0.1", 1027)
+	elif net_mode == "Steam":
+		Steam.joinLobby(lobby_id)
+	
+	multiplayer.multiplayer_peer = peer
 
 func _on_lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int):
 	
