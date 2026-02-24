@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://x7kea0s7dgt5"]
 
-[ext_resource type="Script" uid="uid://dmiqw4dwngct3" path="res://Scripts/steam_networking.gd" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://dmiqw4dwngct3" path="res://Scripts/steam_networking.gd" id="1_nvaej"]
 
 [sub_resource type="Environment" id="Environment_jjgbg"]
 
@@ -8,8 +8,9 @@
 
 [sub_resource type="Compositor" id="Compositor_8gbba"]
 
-[node name="Main" type="Node3D" unique_id=170903427]
-script = ExtResource("1_jjgbg")
+[node name="Lobby" type="Node3D" unique_id=170903427]
+script = ExtResource("1_nvaej")
+net_mode = "ENet"
 
 [node name="HostButton" type="Button" parent="." unique_id=1945343710]
 offset_right = 119.0

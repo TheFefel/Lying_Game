@@ -47,9 +47,9 @@ func host_lobby():
 		Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_FRIENDS_ONLY, max_players)
 		#is_host = true
 
-func _on_lobby_created(result: int, lobby_id: int):
+func _on_lobby_created(result: int, _lobby_id: int):
 	if result == Steam.Result.RESULT_OK:
-		self.lobby_id = lobby_id
+		self.lobby_id = _lobby_id
 		
 		peer = SteamMultiplayerPeer.new()
 		peer.server_relay = true
@@ -60,26 +60,26 @@ func _on_lobby_created(result: int, lobby_id: int):
 		multiplayer.peer_disconnected.connect(_remove_player)
 		_add_player() #to add the host aswell
 		
-		print("Lobby created, lobby ID: ", lobby_id)
+		print("Lobby created, lobby ID: ", _lobby_id)
 
-func join_lobby(lobby_id: int = 0):
+func join_lobby(_lobby_id: int = 0):
 	is_joining = true
 	
 	if net_mode == "ENet":
 		peer.create_client("127.0.0.1", 1027)
 	elif net_mode == "Steam":
-		Steam.joinLobby(lobby_id)
+		Steam.joinLobby(_lobby_id)
 	
 	multiplayer.multiplayer_peer = peer
 
-func _on_lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int):
+func _on_lobby_joined(_lobby_id: int, permissions: int, locked: bool, response: int):
 	if !is_joining:
 		return
 	
-	self.lobby_id = lobby_id
+	self.lobby_id = _lobby_id
 	peer = SteamMultiplayerPeer.new()
 	peer.server_relay = true
-	peer.create_client(Steam.getLobbyOwner(lobby_id))
+	peer.create_client(Steam.getLobbyOwner(_lobby_id))
 	multiplayer.multiplayer_peer = peer
 	
 	is_joining = false

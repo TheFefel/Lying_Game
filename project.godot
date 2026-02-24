@@ -15,6 +15,10 @@ run/main_scene="uid://x7kea0s7dgt5"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SceneLoader="*uid://8ejesyeydvbb"
+
 [debug]
 
 file_logging/enable_file_logging=true
