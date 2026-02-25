@@ -2,19 +2,20 @@ extends Node
 
 @export_enum("Steam", "ENet") var net_mode: String = "Steam"
 
-var app_id : int = 480
-var lobby_id : int = 0
+var app_id: int = 480
+var lobby_id: int = 0
 var peer
-var is_host : bool = false
-var is_joining : bool = false
-var max_players : int = 8
+var is_host: bool = false
+var is_joining: bool = false
+var max_players: int = 8
 
-@onready var host_button: Button = $HostButton
-@onready var join_button: Button = $JoinButton
-@onready var id_prompt: LineEdit = $IdPrompt
+@onready var host_button: Button = $Buttons/HostLobbyButton
+@onready var join_button: Button = $Buttons/JoinLobbyButton
+@onready var id_prompt: LineEdit = $Buttons/EnterLobbyID
+@export var lobby_scene: String = &""
 
 
-const player_scene : PackedScene = preload("uid://bs72ogkvdd7d6")
+const player_scene: PackedScene = preload("uid://bs72ogkvdd7d6")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -85,6 +86,7 @@ func _on_lobby_joined(_lobby_id: int, permissions: int, locked: bool, response: 
 	is_joining = false
 
 func _add_player(id: int = 1):
+	await SceneLoader.load_finished
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player)
@@ -95,14 +97,15 @@ func _remove_player(id: int):
 	
 	self.get_node(str(id)).queue_free()
 
-
-func _on_host_button_pressed():
+func _on_host_lobby_button_pressed() -> void:
 	host_lobby()
+	SceneLoader.load_scene(lobby_scene)
 
 
-func _on_id_prompt_text_changed(new_text: String) -> void:
+func _on_enter_lobby_id_text_changed(new_text: String) -> void:
 	join_button.disabled = (new_text.to_int() == 0)
 
 
-func _on_join_button_pressed() -> void:
+func _on_join_lobby_button_pressed() -> void:
 	join_lobby(id_prompt.text.to_int())
+	SceneLoader.load_scene(lobby_scene)

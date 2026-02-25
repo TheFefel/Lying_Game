@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Lying_Game"
-run/main_scene="uid://x7kea0s7dgt5"
+run/main_scene="uid://h3lld2ytkbg"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

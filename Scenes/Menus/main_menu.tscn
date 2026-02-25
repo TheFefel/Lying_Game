@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://h3lld2ytkbg"]
+
+[ext_resource type="Script" uid="uid://dmiqw4dwngct3" path="res://Scripts/steam_networking.gd" id="1_38aua"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erv1k"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qolup"]
+bg_color = Color(1.5883148e-06, 0.2737011, 0.36442748, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38aua"]
+bg_color = Color(0.42595553, 0.42595556, 0.42595538, 1)
+
+[node name="Main Menu" type="Control" unique_id=1903884848]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_38aua")
+net_mode = "ENet"
+lobby_scene = &"uid://x7kea0s7dgt5"
+
+[node name="Panel" type="Panel" parent="." unique_id=1124351197]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_erv1k")
+
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=1152593558]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.0
+offset_top = -91.0
+offset_right = 203.0
+offset_bottom = 91.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="HostLobbyButton" type="Button" parent="Buttons" unique_id=219030299]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
+text = "Host Lobby"
+
+[node name="EnterLobbyID" type="LineEdit" parent="Buttons" unique_id=34042813]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_38aua")
+placeholder_text = "Enter Lobby ID"
+alignment = 1
+
+[node name="JoinLobbyButton" type="Button" parent="Buttons" unique_id=500870943]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
+disabled = true
+text = "Join Lobby"
+
+[node name="OptionsButton" type="Button" parent="Buttons" unique_id=1671024276]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="Buttons" unique_id=1665260466]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
+text = "Quit"
+
+[connection signal="pressed" from="Buttons/HostLobbyButton" to="." method="_on_host_lobby_button_pressed"]
+[connection signal="text_changed" from="Buttons/EnterLobbyID" to="." method="_on_enter_lobby_id_text_changed"]
+[connection signal="pressed" from="Buttons/JoinLobbyButton" to="." method="_on_join_lobby_button_pressed"]
