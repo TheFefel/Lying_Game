@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://h3lld2ytkbg"]
 
-[ext_resource type="Script" uid="uid://dmiqw4dwngct3" path="res://Scripts/steam_networking.gd" id="1_38aua"]
+[ext_resource type="Script" uid="uid://dwuxl42cmktfn" path="res://Scenes/Menus/main_menu.gd" id="1_38aua"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erv1k"]
 bg_color = Color(0, 0, 0, 1)
@@ -19,8 +19,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_38aua")
-net_mode = "ENet"
-lobby_scene = &"uid://x7kea0s7dgt5"
 
 [node name="Panel" type="Panel" parent="." unique_id=1124351197]
 layout_mode = 1
@@ -61,7 +59,6 @@ alignment = 1
 [node name="JoinLobbyButton" type="Button" parent="Buttons" unique_id=500870943]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
-disabled = true
 text = "Join Lobby"
 
 [node name="OptionsButton" type="Button" parent="Buttons" unique_id=1671024276]

@@ -26,4 +26,6 @@ size = Vector3(20.005, 10, 1)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=466266553]
 _spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
-spawn_path = NodePath("..")
+spawn_path = NodePath("../PlayerRoot")
+
+[node name="PlayerRoot" type="Node" parent="." unique_id=1767889731]

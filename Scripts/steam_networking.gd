@@ -1,6 +1,6 @@
 extends Node
 
-@export_enum("Steam", "ENet") var net_mode: String = "Steam"
+var net_mode: String = "ENet" #Modus Steam oder ENet
 
 var app_id: int = 480
 var lobby_id: int = 0
@@ -9,10 +9,13 @@ var is_host: bool = false
 var is_joining: bool = false
 var max_players: int = 8
 
-@onready var host_button: Button = $Buttons/HostLobbyButton
-@onready var join_button: Button = $Buttons/JoinLobbyButton
-@onready var id_prompt: LineEdit = $Buttons/EnterLobbyID
-@export var lobby_scene: String = &""
+signal lobby_ready_to_join
+signal joining_peer_created
+
+#@onready var host_button: Button = $Buttons/HostLobbyButton
+#@onready var join_button: Button = $Buttons/JoinLobbyButton
+#@onready var id_prompt: LineEdit = $Buttons/EnterLobbyID
+#@onready var lobby_scene: StringName = &"uid://x7kea0s7dgt5"
 
 
 const player_scene: PackedScene = preload("uid://bs72ogkvdd7d6")
@@ -44,6 +47,8 @@ func host_lobby():
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
 		_add_player()
+		lobby_ready_to_join.emit()
+		print("Lobby ready to join")
 	elif net_mode == "Steam":
 		Steam.createLobby(Steam.LobbyType.LOBBY_TYPE_FRIENDS_ONLY, max_players)
 		#is_host = true
@@ -72,6 +77,8 @@ func join_lobby(_lobby_id: int = 0):
 		Steam.joinLobby(_lobby_id)
 	
 	multiplayer.multiplayer_peer = peer
+	joining_peer_created.emit()
+	print("Joining peer created")
 
 func _on_lobby_joined(_lobby_id: int, permissions: int, locked: bool, response: int):
 	if !is_joining:
@@ -96,16 +103,3 @@ func _remove_player(id: int):
 		return
 	
 	self.get_node(str(id)).queue_free()
-
-func _on_host_lobby_button_pressed() -> void:
-	host_lobby()
-	SceneLoader.load_scene(lobby_scene)
-
-
-func _on_enter_lobby_id_text_changed(new_text: String) -> void:
-	join_button.disabled = (new_text.to_int() == 0)
-
-
-func _on_join_lobby_button_pressed() -> void:
-	join_lobby(id_prompt.text.to_int())
-	SceneLoader.load_scene(lobby_scene)
