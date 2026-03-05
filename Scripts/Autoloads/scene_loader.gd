@@ -43,6 +43,6 @@ func _process(_delta: float) -> void:
 		ResourceLoader.THREAD_LOAD_LOADED:
 			loaded_resource = ResourceLoader.load_threaded_get(scene_path)
 			get_tree().change_scene_to_packed(loaded_resource)
-			load_finished.emit()
 			print("Load finished")
-			#set_process(false)
+			load_finished.emit()
+			set_process(false)

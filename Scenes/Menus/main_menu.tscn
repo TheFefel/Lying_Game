@@ -37,9 +37,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -203.0
-offset_top = -91.0
+offset_top = -121.5
 offset_right = 203.0
-offset_bottom = 91.0
+offset_bottom = 121.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
@@ -70,6 +70,12 @@ text = "Options"
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
 text = "Quit"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=245576300]
+_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
+spawn_path = NodePath("../LobbySpawn")
+
+[node name="LobbySpawn" type="Node" parent="." unique_id=1016929472]
 
 [connection signal="pressed" from="Buttons/HostLobbyButton" to="." method="_on_host_lobby_button_pressed"]
 [connection signal="text_changed" from="Buttons/EnterLobbyID" to="." method="_on_enter_lobby_id_text_changed"]
