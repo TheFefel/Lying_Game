@@ -52,6 +52,7 @@ var freeflying : bool = false
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
+@onready var camera_3d: Camera3D = $Head/Camera3D
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -60,6 +61,7 @@ func _ready() -> void:
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
+	camera_3d.current = is_multiplayer_authority()
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
