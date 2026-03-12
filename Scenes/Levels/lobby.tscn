@@ -21,7 +21,7 @@ use_collision = true
 environment = SubResource("Environment_b7rcr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=262287908]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 14.065007, 0)
+transform = Transform3D(0.70710677, -0.5, 0.5, 0, 0.7071068, 0.7071068, -0.70710677, -0.5, 0.5, 22.719404, 14.065007, 0)
 
 [node name="PlayerSpawn" type="Node3D" parent="." unique_id=924980840]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
