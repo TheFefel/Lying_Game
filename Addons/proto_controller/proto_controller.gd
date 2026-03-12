@@ -54,7 +54,7 @@ var freeflying : bool = false
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera_3d: Camera3D = $Head/Camera3D
 
-func _enter_tree():
+func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
@@ -82,8 +82,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
-	
-	if !is_multiplayer_authority(): #to only read input if you're this player
+	if !is_multiplayer_authority():
 		return
 	
 	# If freeflying, handle freefly and nothing else

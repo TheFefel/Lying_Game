@@ -1,17 +1,8 @@
-[gd_scene format=3 uid="uid://h3lld2ytkbg"]
+[gd_scene format=3 uid="uid://8pn6couk3yqw"]
 
 [ext_resource type="Script" uid="uid://dwuxl42cmktfn" path="res://Scenes/Menus/main_menu.gd" id="1_38aua"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erv1k"]
-bg_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qolup"]
-bg_color = Color(1.5883148e-06, 0.2737011, 0.36442748, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38aua"]
-bg_color = Color(0.42595553, 0.42595556, 0.42595538, 1)
-
-[node name="Main Menu" type="Control" unique_id=1903884848]
+[node name="MainMenu" type="Control" unique_id=621809873]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,63 +11,51 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_38aua")
 
-[node name="Panel" type="Panel" parent="." unique_id=1124351197]
+[node name="Background" type="Panel" parent="." unique_id=1102799485]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_erv1k")
 
-[node name="Buttons" type="VBoxContainer" parent="." unique_id=1152593558]
+[node name="Buttons" type="VBoxContainer" parent="." unique_id=2041257786]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -203.0
-offset_top = -121.5
-offset_right = 203.0
-offset_bottom = 121.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 247.11108
+offset_top = 139.0
+offset_right = -247.11108
+offset_bottom = -139.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="HostLobbyButton" type="Button" parent="Buttons" unique_id=219030299]
+[node name="HostButton" type="Button" parent="Buttons" unique_id=923132218]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
 text = "Host Lobby"
 
-[node name="EnterLobbyID" type="LineEdit" parent="Buttons" unique_id=34042813]
+[node name="LobbyIDLine" type="LineEdit" parent="Buttons" unique_id=103483639]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_38aua")
 placeholder_text = "Enter Lobby ID"
 alignment = 1
 
-[node name="JoinLobbyButton" type="Button" parent="Buttons" unique_id=500870943]
+[node name="JoinButton" type="Button" parent="Buttons" unique_id=2142321744]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
+disabled = true
 text = "Join Lobby"
 
-[node name="OptionsButton" type="Button" parent="Buttons" unique_id=1671024276]
+[node name="OptionsButton" type="Button" parent="Buttons" unique_id=885080038]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="Buttons" unique_id=1665260466]
+[node name="QuitButton" type="Button" parent="Buttons" unique_id=1813176482]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_qolup")
-text = "Quit"
+text = "Quit
+"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=245576300]
-_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
-spawn_path = NodePath("../LobbySpawn")
-
-[node name="LobbySpawn" type="Node" parent="." unique_id=1016929472]
-
-[connection signal="pressed" from="Buttons/HostLobbyButton" to="." method="_on_host_lobby_button_pressed"]
-[connection signal="text_changed" from="Buttons/EnterLobbyID" to="." method="_on_enter_lobby_id_text_changed"]
-[connection signal="pressed" from="Buttons/JoinLobbyButton" to="." method="_on_join_lobby_button_pressed"]
+[connection signal="pressed" from="Buttons/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="text_changed" from="Buttons/LobbyIDLine" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="Buttons/JoinButton" to="." method="_on_join_button_pressed"]

@@ -1,0 +1,24 @@
+extends Node
+
+const LOBBY_SCENE: PackedScene = preload("uid://c1bmx4oubegm4")
+
+@onready var main_menu: Control = $MainMenu
+@onready var level_spawn: Node = $LevelSpawn
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	#get_tree().paused = true
+	main_menu.hidden.connect(start_lobby)
+
+func start_lobby():
+	#get_tree().paused = false
+	
+	if multiplayer.is_server():
+		change_to_lobby.call_deferred()
+
+func change_to_lobby():
+	for c in level_spawn.get_children():
+		level_spawn.remove_child(c)
+		c.queue_free()
+	
+	level_spawn.add_child(LOBBY_SCENE.instantiate())

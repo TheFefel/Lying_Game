@@ -1,30 +1,32 @@
-[gd_scene format=3 uid="uid://x7kea0s7dgt5"]
+[gd_scene format=3 uid="uid://c1bmx4oubegm4"]
 
 [ext_resource type="Script" uid="uid://cnfa5iawv1061" path="res://Scenes/Levels/lobby.gd" id="1_b7rcr"]
 
-[sub_resource type="Environment" id="Environment_jjgbg"]
+[sub_resource type="Environment" id="Environment_b7rcr"]
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_bo1nx"]
-
-[sub_resource type="Compositor" id="Compositor_8gbba"]
-
-[node name="Lobby" type="Node3D" unique_id=170903427]
+[node name="Lobby" type="Node3D" unique_id=26256223]
 script = ExtResource("1_b7rcr")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=111224825]
-environment = SubResource("Environment_jjgbg")
-camera_attributes = SubResource("CameraAttributesPractical_bo1nx")
-compositor = SubResource("Compositor_8gbba")
+[node name="Environment" type="Node3D" parent="." unique_id=10568476]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=66400434]
-transform = Transform3D(0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, -0.5, 0.5, 34.940727, 15.314941, 19.917551)
-
-[node name="Floor" type="CSGBox3D" parent="." unique_id=1509949464]
+[node name="Floor" type="CSGBox3D" parent="Environment" unique_id=140660060]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, -0.5, 0)
 use_collision = true
-size = Vector3(100, 0.1, 100)
 
-[node name="Wall" type="CSGBox3D" parent="." unique_id=1396021491]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -10.646)
-size = Vector3(20.005, 10, 1)
+[node name="Wall" type="CSGBox3D" parent="Environment" unique_id=1370932863]
+transform = Transform3D(10, 0, 0, 0, 5, 0, 0, 0, 1, 0, 2.5, -8)
+use_collision = true
 
-[node name="PlayerRoot" type="Node" parent="." unique_id=1767889731]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=385172789]
+environment = SubResource("Environment_b7rcr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=262287908]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 14.065007, 0)
+
+[node name="PlayerSpawn" type="Node3D" parent="." unique_id=924980840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=931946817]
+_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
+spawn_path = NodePath("../PlayerSpawn")
+spawn_limit = 8

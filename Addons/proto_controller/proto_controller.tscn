@@ -21,7 +21,7 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="ProtoController" type="CharacterBody3D" unique_id=52498681]
+[node name="ProtoController" type="CharacterBody3D" unique_id=2043637533]
 script = ExtResource("1_ucva2")
 input_left = "move_left"
 input_right = "move_right"
@@ -29,20 +29,20 @@ input_forward = "move_forward"
 input_back = "move_backward"
 input_jump = "jump"
 
-[node name="Mesh" type="MeshInstance3D" parent="." unique_id=1057911872]
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=393409476]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 material_override = SubResource("StandardMaterial3D_iof21")
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_ucva2")
 
-[node name="Collider" type="CollisionShape3D" parent="." unique_id=155262412]
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=972356594]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_iof21")
 
-[node name="Head" type="Node3D" parent="." unique_id=839011432]
+[node name="Head" type="Node3D" parent="." unique_id=1594247424]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1223578933]
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=285322782]
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2089960601]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=145346062]
 replication_config = SubResource("SceneReplicationConfig_njsuj")

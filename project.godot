@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="Lying_Game"
-run/main_scene="uid://h3lld2ytkbg"
+run/main_scene="uid://cf0ubi2th3q6o"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-SceneLoader="*uid://8ejesyeydvbb"
-SteamNetworking="*uid://dmiqw4dwngct3"
+Steamworks="*uid://wfnymfym7kap"
+SteamLobby="*uid://c1gh418naxnmi"
 
 [debug]
 
