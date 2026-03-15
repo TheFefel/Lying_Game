@@ -1,5 +1,10 @@
 extends Node
 
+signal create_lobby_finished
+signal join_lobby_finished
+
+const PLAYER_SCENE: PackedScene = preload("uid://bs72ogkvdd7d6")
+
 var lobby_data
 var lobby_id: int = 0
 var lobby_members: Array = []
@@ -9,11 +14,6 @@ var steam_id: int = 0
 var steam_username: String = ""
 var peer: SteamMultiplayerPeer
 var is_joining: bool = false
-
-const PLAYER_SCENE: PackedScene = preload("uid://bs72ogkvdd7d6")
-
-signal create_lobby_finished
-signal join_lobby_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

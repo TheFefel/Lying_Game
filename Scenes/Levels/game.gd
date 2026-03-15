@@ -1,9 +1,9 @@
 extends Node
 
-const LOBBY_SCENE: PackedScene = preload("uid://c1bmx4oubegm4")
-
 @onready var main_menu: Control = $MainMenu
 @onready var level_spawn: Node = $LevelSpawn
+
+const LOBBY_SCENE: PackedScene = preload("uid://c1bmx4oubegm4")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

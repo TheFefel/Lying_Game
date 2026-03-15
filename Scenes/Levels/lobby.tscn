@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1bmx4oubegm4"]
 
 [ext_resource type="Script" uid="uid://cnfa5iawv1061" path="res://Scenes/Levels/lobby.gd" id="1_b7rcr"]
+[ext_resource type="PackedScene" uid="uid://cvmhi3ooi1iv5" path="res://Scenes/Interact/interactable_button.tscn" id="2_fmxxw"]
 
 [sub_resource type="Environment" id="Environment_b7rcr"]
 
@@ -30,3 +31,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 _spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
 spawn_path = NodePath("../PlayerSpawn")
 spawn_limit = 8
+
+[node name="Interactable_Button" parent="." unique_id=1007929146 instance=ExtResource("2_fmxxw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -7.457)

@@ -5,6 +5,9 @@ signal interacted(body)
 
 @export var prompt_message: String = "Interact"
 @export var prompt_input: StringName = "interact"
+@export var mesh: MeshInstance3D
+
+var highlight_material = preload("res://Assets/Materials/interact_highlight.tres")
 
 func get_prompt():
 	var key_name = ""
@@ -16,7 +19,14 @@ func get_prompt():
 			key_name = action.as_text()
 			break
 	
-	return "[" + key_name + "]" + prompt_message
+	return "[" + key_name + "] " + prompt_message
+
+func highlight_interactable():
+	mesh.material_overlay = highlight_material
+
+func unhighlight_interactable():
+	mesh.material_overlay = null
 
 func interact(body):
 	interacted.emit(body)
+	print("Interacted emitted")
