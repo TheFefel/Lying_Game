@@ -14,11 +14,11 @@ func start_lobby():
 	#get_tree().paused = false
 	
 	if multiplayer.is_server():
-		change_to_lobby.call_deferred()
+		change_to_level.call_deferred(LOBBY_SCENE)
 
-func change_to_lobby():
+func change_to_level(scene: PackedScene):
 	for c in level_spawn.get_children():
 		level_spawn.remove_child(c)
 		c.queue_free()
 	
-	level_spawn.add_child(LOBBY_SCENE.instantiate())
+	level_spawn.add_child(scene.instantiate())

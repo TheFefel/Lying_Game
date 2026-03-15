@@ -7,7 +7,7 @@ signal interacted(body)
 @export var prompt_input: StringName = "interact"
 @export var mesh: MeshInstance3D
 
-var highlight_material = preload("res://Assets/Materials/interact_highlight.tres")
+var highlight_material = preload("uid://c1kkeufcteajo")
 
 func get_prompt():
 	var key_name = ""
