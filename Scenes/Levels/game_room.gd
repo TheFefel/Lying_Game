@@ -1,7 +1,4 @@
 extends Node3D
-class_name LobbyScene
-
-signal start_game_pressed
 
 @onready var player_spawn: Node3D = $PlayerSpawn
 
@@ -38,11 +35,3 @@ func _remove_player(id: int):
 		return
 	
 	player_spawn.get_node(str(id)).queue_free()
-
-
-func _on_start_game_button_interacted(_body: Variant) -> void:
-	if !multiplayer.is_server():
-		print("The host has to start the game")
-	else:
-		start_game_pressed.emit()
-		print("Emitted start_game_pressed")

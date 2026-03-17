@@ -1,12 +1,29 @@
 [gd_scene format=3 uid="uid://bu4n2e50i25wu"]
 
+[ext_resource type="Script" uid="uid://dtfri7jgbr575" path="res://Scenes/Levels/game_room.gd" id="1_kig0q"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jb1co"]
 
 [node name="GameRoom" type="Node3D" unique_id=1309680244]
+script = ExtResource("1_kig0q")
 
 [node name="Environment" type="Node3D" parent="." unique_id=660334582]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Environment" unique_id=1598537680]
+[node name="Floor" type="CSGBox3D" parent="Environment" unique_id=1598537680]
 transform = Transform3D(50, 0, 0, 0, 0.25, 0, 0, 0, 50, 0, 0, 0)
 use_collision = true
 material = SubResource("StandardMaterial3D_jb1co")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1579930462]
+transform = Transform3D(0.6881773, -0.38802707, -0.61306363, 0, -0.84497267, 0.5348096, -0.72554255, -0.36804378, -0.581491, 0.0039100647, 6.1581955, 0)
+
+[node name="Wall" type="CSGBox3D" parent="Environment" unique_id=626356646]
+transform = Transform3D(14.597151, 0, 0, 0, 4.368613, 0, 0, 0, 0.68263274, 0, 2.3002596, 8)
+
+[node name="PlayerSpawn" type="Node3D" parent="." unique_id=1621837091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1573897155]
+_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
+spawn_path = NodePath("../PlayerSpawn")
+spawn_limit = 8

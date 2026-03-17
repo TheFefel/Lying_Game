@@ -34,3 +34,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 _spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
 spawn_path = NodePath("../PlayerSpawn")
 spawn_limit = 8
+
+[connection signal="interacted" from="Environment/StartGameButton" to="." method="_on_start_game_button_interacted"]
