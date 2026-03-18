@@ -5,10 +5,10 @@ extends RayCast3D
 var current_interactable: Interactable = null
 
 func _physics_process(_delta: float) -> void:
+	prompt.text = ""
+	
 	if !is_multiplayer_authority():
 		return
-	
-	prompt.text = ""
 	
 	if is_colliding():
 		var collider = get_collider()
