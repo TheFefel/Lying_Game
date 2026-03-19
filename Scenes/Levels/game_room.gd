@@ -37,7 +37,7 @@ func _add_player(id: int, index: int):
 	player.global_position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
 	await get_tree().process_frame
-	player.rpc_id(id, "set_player_bools", false, false)
+	player.rpc("set_player_bools", false, false)
 
 func _remove_player(id: int):
 	if not player_spawn.has_node(str(id)):
