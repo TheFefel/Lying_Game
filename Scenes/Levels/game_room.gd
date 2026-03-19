@@ -34,8 +34,6 @@ func _add_player(id: int, index: int):
 	var player: Player = PLAYER_SCENE.instantiate()
 	player.name = str(id)
 	player_spawn.add_child(player, true)
-	#player.global_position = get_spawn_position(index, total_players)
-	#player.set_look_at(Vector3.ZERO)
 	await get_tree().process_frame
 	rpc("_spawn_player", player, index)
 
