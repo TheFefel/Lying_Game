@@ -200,8 +200,10 @@ func check_input_mappings():
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local")
 func set_player_bools(can_move_value: bool, can_jump_value: bool):
+	if not multiplayer.is_server():
+		return
 	print("Called set_player_bools")
 	can_move = can_move_value
 	can_jump = can_jump_value
