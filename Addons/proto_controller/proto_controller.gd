@@ -5,6 +5,8 @@
 
 extends CharacterBody3D
 
+class_name Player
+
 ## Can we move around?
 @export var can_move : bool = true
 ## Are we affected by gravity?
@@ -44,7 +46,7 @@ extends CharacterBody3D
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
 
-var mouse_captured : bool = false
+var mouse_captured : bool = true
 var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
@@ -62,6 +64,7 @@ func _ready() -> void:
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 	camera_3d.current = is_multiplayer_authority()
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -72,7 +75,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Look around
 	if mouse_captured and event is InputEventMouseMotion:
-		rotate_look(event.relative)
+		rotate_look(event.screen_relative)
 	
 	# Toggle freefly mode
 	if can_freefly and Input.is_action_just_pressed(input_freefly):
@@ -138,6 +141,20 @@ func rotate_look(rot_input : Vector2):
 	rotate_y(look_rotation.y)
 	head.transform.basis = Basis()
 	head.rotate_x(look_rotation.x)
+
+func set_look_at(target: Vector3):
+	var dir = (target - global_transform.origin).normalized()
+	
+	look_rotation.y = atan2(-dir.x, dir.z)
+	look_rotation.x = asin(dir.y)
+	
+	transform.basis = Basis()
+	rotate_y(look_rotation.y)
+	
+	head.transform.basis = Basis()
+	head.rotate_x(look_rotation.x)
+	
+	print("Set the look at for player")
 
 
 func enable_freefly():

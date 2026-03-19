@@ -17,8 +17,9 @@ material = SubResource("StandardMaterial3D_jb1co")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment" unique_id=1579930462]
 transform = Transform3D(0.6881773, -0.38802707, -0.61306363, 0, -0.84497267, 0.5348096, -0.72554255, -0.36804378, -0.581491, 0.0039100647, 6.1581955, 0)
 
-[node name="Wall" type="CSGBox3D" parent="Environment" unique_id=626356646]
-transform = Transform3D(14.597151, 0, 0, 0, 4.368613, 0, 0, 0, 0.68263274, 0, 2.3002596, 8)
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment" unique_id=1966976856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0893211, 0)
+sides = 20
 
 [node name="PlayerSpawn" type="Node3D" parent="." unique_id=1621837091]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)

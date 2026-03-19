@@ -29,9 +29,11 @@ func _exit_tree() -> void:
 	multiplayer.peer_disconnected.disconnect(_remove_player)
 
 func _add_player(id: int):
-	var character = PLAYER_SCENE.instantiate()
-	character.name = str(id)
-	player_spawn.add_child(character, true)
+	var player: Player = PLAYER_SCENE.instantiate()
+	player.name = str(id)
+	player.can_move = true
+	player.can_jump = true
+	player_spawn.add_child(player, true)
 
 func _remove_player(id: int):
 	if not player_spawn.has_node(str(id)):
