@@ -40,7 +40,7 @@ func _add_player(id: int, index: int):
 	rpc("_spawn_player", player, index)
 
 @rpc("authority", "call_local")
-func _spawn_player(player: Player, index: int):
+func _spawn_player(player, index: int):
 	if not multiplayer.is_server():
 		return
 	player.global_position = get_spawn_position(index, total_players)
