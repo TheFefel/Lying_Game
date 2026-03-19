@@ -34,10 +34,19 @@ func _add_player(id: int, index: int):
 	var player: Player = PLAYER_SCENE.instantiate()
 	player.name = str(id)
 	player_spawn.add_child(player, true)
+	#player.global_position = get_spawn_position(index, total_players)
+	#player.set_look_at(Vector3.ZERO)
+	await get_tree().process_frame
+	rpc("_spawn_player", player, index)
+
+@rpc("authority", "call_local")
+func _spawn_player(player: Player, index: int):
+	if not multiplayer.is_server():
+		return
 	player.global_position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
-	#await get_tree().process_frame
-	player.rpc("set_player_bools", false, false)
+	player.can_jump = false
+	player.can_move = false
 
 func _remove_player(id: int):
 	if not player_spawn.has_node(str(id)):
@@ -53,4 +62,4 @@ func get_spawn_position(index: int, total_players_num: int, radius: float = 10.0
 	
 	print("Index: ", index, ", Total Players: ", total_players_num, ", Angle: ", angle, ", X: ", x, ", Z: ", z)
 	
-	return Vector3(x, 1.0, z)
+	return Vector3(x, 0, z)
