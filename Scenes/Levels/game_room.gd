@@ -35,7 +35,7 @@ func _add_player(id: int, index: int):
 	player.name = str(id)
 	player_spawn.add_child(player, true)
 	player.global_position = get_spawn_position(index, total_players)
-	player.rpc("set_player_bools", false, false)
+	player.rpc_id(id, "set_player_bools", false, false)
 	player.set_look_at(Vector3.UP)
 
 func _remove_player(id: int):
