@@ -15,13 +15,18 @@ func start_lobby():
 		change_to_lobby.call_deferred()
 
 func change_to_level(scene: PackedScene):
-	var level_instance = scene.instantiate()
+	var lobby_node
 	
 	for c in level_spawn.get_children():
+		if c.name == "Lobby":
+			lobby_node = c
+			continue
 		level_spawn.remove_child(c)
 		c.queue_free()
 	
-	level_spawn.add_child(level_instance)
+	level_spawn.add_child(scene.instantiate())
+	level_spawn.remove_child(lobby_node)
+	lobby_node.queue_free()
 
 func change_to_lobby():
 	for c in level_spawn.get_children():
