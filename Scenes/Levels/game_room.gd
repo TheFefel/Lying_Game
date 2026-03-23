@@ -18,6 +18,7 @@ func _ready() -> void:
 	
 	if not OS.has_feature("dedicated_server"): # Host muss bei Dedicated Server nicht hinzugefügt werden
 		_add_player(1, player_index)
+		player_index += 1
 	
 	for id in multiplayer.get_peers():
 		_add_player(id, player_index)
