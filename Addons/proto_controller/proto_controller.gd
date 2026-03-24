@@ -55,6 +55,7 @@ var freeflying : bool = false
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera_3d: Camera3D = $Head/Camera3D
+@onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())

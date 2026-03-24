@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var player_spawn: Node3D = $PlayerSpawn
+@onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 
 const PLAYER_SCENE: PackedScene = preload("uid://bs72ogkvdd7d6")
 
@@ -34,8 +35,12 @@ func _exit_tree() -> void:
 func _add_player(id: int, index: int):
 	var player: Player = PLAYER_SCENE.instantiate()
 	player.name = str(id)
+	player.position = get_spawn_position(index, total_players)
 	player_spawn.add_child(player, true)
-	_spawn_player.rpc(id, player.name, index)
+	player.set_look_at(Vector3.ZERO)
+	player.can_jump = false
+	player.can_move = false
+	#_spawn_player.rpc(player.name, index)
 
 @rpc("call_local")
 func _spawn_player(player_name, index: int):
