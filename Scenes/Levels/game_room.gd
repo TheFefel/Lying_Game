@@ -42,7 +42,7 @@ func _add_player(id: int, index: int):
 func _spawn_player(player_name, index: int):
 	if not multiplayer.is_server():
 		return
-	var player = player_spawn.get_node(player_name)
+	var player = get_node("LevelSpawn/GameRoom/PlayerSpawn/%s" % player_name)
 	player.position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
 	player.can_jump = false
