@@ -37,6 +37,8 @@ func _add_player(id: int, index: int):
 	player.name = str(id)
 	player.position = get_spawn_position(index, total_players)
 	player_spawn.add_child(player, true)
+	if id == 1:
+		player.multiplayer_synchronizer.set_visibility_for(0, false)
 	player.set_look_at(Vector3.ZERO)
 	player.can_jump = false
 	player.can_move = false
