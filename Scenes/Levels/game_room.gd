@@ -36,12 +36,13 @@ func _add_player(id: int, index: int):
 	player.name = str(id)
 	player_spawn.add_child(player, true)
 	await get_tree().process_frame
-	_spawn_player.rpc(player, index)
+	_spawn_player.rpc(player.name, index)
 
 @rpc("call_local")
-func _spawn_player(player, index: int):
+func _spawn_player(player_name, index: int):
 	if not multiplayer.is_server():
 		return
+	var player = player_spawn.get_node(player_name)
 	player.position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
 	player.can_jump = false
