@@ -4,7 +4,7 @@ extends Node3D
 
 const PLAYER_SCENE: PackedScene = preload("uid://bs72ogkvdd7d6")
 
-var player_index: int = 1
+var player_index: int = 0
 var total_players: int
 
 # Called when the node enters the scene tree for the first time.
@@ -35,14 +35,13 @@ func _add_player(id: int, index: int):
 	var player: Player = PLAYER_SCENE.instantiate()
 	player.name = str(id)
 	player_spawn.add_child(player, true)
-	await get_tree().process_frame
-	_spawn_player.rpc(player.name, index)
+	_spawn_player.rpc(id, player.name, index)
 
 @rpc("call_local")
 func _spawn_player(player_name, index: int):
 	if not multiplayer.is_server():
 		return
-	var player = get_node("LevelSpawn/GameRoom/PlayerSpawn/%s" % player_name)
+	var player = get_node("/root/Game/LevelSpawn/GameRoom/PlayerSpawn/%s" % player_name)
 	player.position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
 	player.can_jump = false
