@@ -24,10 +24,10 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 properties/2/path = NodePath(".:can_move")
 properties/2/spawn = true
-properties/2/replication_mode = 1
+properties/2/replication_mode = 2
 properties/3/path = NodePath(".:can_jump")
 properties/3/spawn = true
-properties/3/replication_mode = 1
+properties/3/replication_mode = 2
 
 [node name="ProtoController" type="CharacterBody3D" unique_id=2043637533]
 script = ExtResource("1_ucva2")

@@ -36,7 +36,7 @@ func _add_player(id: int, index: int):
 	player.name = str(id)
 	player_spawn.add_child(player, true)
 	await get_tree().process_frame
-	rpc("_spawn_player", player, index)
+	rpc_id(id, "_spawn_player", player, index)
 
 @rpc("authority", "call_local")
 func _spawn_player(player, index: int):
@@ -51,7 +51,8 @@ func _remove_player(id: int):
 	if not player_spawn.has_node(str(id)):
 		return
 	
-	player_spawn.get_node(str(id)).queue_free()
+	print("Removing: ", player_spawn.get_node(str(id)).to_string())
+	player_spawn.get_node(str(id)).queue_free.call_deferred()
 
 func get_spawn_position(index: int, total_players_num: int, radius: float = 10.0) -> Vector3:
 	var angle = (2 * PI / total_players_num) * index

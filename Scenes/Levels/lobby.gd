@@ -39,7 +39,7 @@ func _remove_player(id: int):
 	if not player_spawn.has_node(str(id)):
 		return
 	
-	player_spawn.get_node(str(id)).queue_free()
+	player_spawn.get_node(str(id)).queue_free.call_deferred()
 
 
 func _on_start_game_button_interacted(_body: Variant) -> void:

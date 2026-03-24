@@ -58,6 +58,7 @@ var freeflying : bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	print("Set multiplayer authority to: ", name.to_int())
 
 func _ready() -> void:
 	check_input_mappings()
