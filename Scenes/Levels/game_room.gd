@@ -36,13 +36,13 @@ func _add_player(id: int, index: int):
 	player.name = str(id)
 	player_spawn.add_child(player, true)
 	await get_tree().process_frame
-	rpc_id(id, "_spawn_player", player, index)
+	_spawn_player.rpc(player, index)
 
-@rpc("authority", "call_local")
+@rpc("call_local")
 func _spawn_player(player, index: int):
 	if not multiplayer.is_server():
 		return
-	player.global_position = get_spawn_position(index, total_players)
+	player.position = get_spawn_position(index, total_players)
 	player.set_look_at(Vector3.ZERO)
 	player.can_jump = false
 	player.can_move = false
