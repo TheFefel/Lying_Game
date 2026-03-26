@@ -8,9 +8,16 @@ script = ExtResource("1_72uep")
 
 [node name="LevelSpawn" type="Node" parent="." unique_id=929868632]
 
+[node name="PlayerSpawnDummy" type="Node" parent="." unique_id=2135776678]
+
 [node name="LevelSpawner" type="MultiplayerSpawner" parent="." unique_id=1042101545]
 _spawnable_scenes = PackedStringArray("uid://c1bmx4oubegm4", "uid://bu4n2e50i25wu")
 spawn_path = NodePath("../LevelSpawn")
 spawn_limit = 1
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=280356281]
+_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
+spawn_path = NodePath("../PlayerSpawnDummy")
+spawn_limit = 8
 
 [node name="MainMenu" parent="." unique_id=621809873 instance=ExtResource("1_ds3o4")]

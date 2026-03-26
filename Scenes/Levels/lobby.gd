@@ -2,6 +2,7 @@ extends Node3D
 class_name LobbyScene
 
 signal start_game_pressed
+signal lobby_scene_ready
 
 @onready var player_spawn: Node3D = $PlayerSpawn
 
@@ -11,6 +12,8 @@ const PLAYER_SCENE: PackedScene = preload("uid://bs72ogkvdd7d6")
 func _ready() -> void:
 	if not multiplayer.is_server():
 		return
+	
+	lobby_scene_ready.emit()
 	
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)

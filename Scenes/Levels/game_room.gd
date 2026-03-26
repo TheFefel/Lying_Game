@@ -1,5 +1,9 @@
 extends Node3D
 
+class_name GameRoom
+
+signal game_room_ready
+
 @onready var player_spawn: Node3D = $PlayerSpawn
 @onready var multiplayer_spawner: MultiplayerSpawner = $MultiplayerSpawner
 
@@ -12,6 +16,8 @@ var total_players: int
 func _ready() -> void:
 	if not multiplayer.is_server():
 		return
+	
+	game_room_ready.emit()
 	
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
@@ -35,16 +41,10 @@ func _exit_tree() -> void:
 func _add_player(id: int, index: int):
 	var player: Player = PLAYER_SCENE.instantiate()
 	player.name = str(id)
-	player.position = get_spawn_position(index, total_players)
 	player_spawn.add_child(player, true)
-	if id == 1:
-		player.multiplayer_synchronizer.set_visibility_for(0, false)
-	player.set_look_at(Vector3.ZERO)
-	player.can_jump = false
-	player.can_move = false
-	#_spawn_player.rpc(player.name, index)
+	_spawn_player.rpc(player.name, index)
 
-@rpc("call_local")
+@rpc("any_peer", "call_local")
 func _spawn_player(player_name, index: int):
 	if not multiplayer.is_server():
 		return
