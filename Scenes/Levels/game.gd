@@ -20,17 +20,21 @@ func change_to_level(scene: PackedScene):
 		level_spawn.remove_child(c)
 		c.queue_free()
 	
-	level_spawn.add_child(scene.instantiate())
+	var game_room_instance: GameRoom = scene.instantiate()
+	level_spawn.add_child(game_room_instance)
+	
+	game_room_instance.game_room_ready.connect(_on_game_room_ready.bind(game_room_instance))
 
 func change_to_lobby():
 	for c in level_spawn.get_children():
 		level_spawn.remove_child(c)
 		c.queue_free()
 	
-	var lobby_instance = LOBBY_SCENE.instantiate()
+	var lobby_instance: LobbyScene = LOBBY_SCENE.instantiate()
 	level_spawn.add_child(lobby_instance)
 	
-	lobby_instance.start_game_pressed.connect(_on_start_game_pressed.bind(lobby_instance))
+	lobby_instance.lobby_scene_ready.connect(_on_lobby_scene_ready.bind(lobby_instance))
+	lobby_instance.start_game_pressed.connect(_on_start_game_pressed)
 
 func _on_start_game_pressed():
 	change_to_level(LEVEL_SCENE)
