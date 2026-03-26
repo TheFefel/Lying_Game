@@ -23,7 +23,7 @@ func change_to_level(scene: PackedScene):
 	var game_room_instance: GameRoom = scene.instantiate()
 	level_spawn.add_child(game_room_instance)
 	
-	game_room_instance.game_room_ready.connect(_on_game_room_ready.bind(game_room_instance))
+	player_spawner.spawn_path = game_room_instance.player_spawn.get_path()
 
 func change_to_lobby():
 	for c in level_spawn.get_children():
@@ -33,15 +33,20 @@ func change_to_lobby():
 	var lobby_instance: LobbyScene = LOBBY_SCENE.instantiate()
 	level_spawn.add_child(lobby_instance)
 	
-	lobby_instance.lobby_scene_ready.connect(_on_lobby_scene_ready.bind(lobby_instance))
+	player_spawner.spawn_path = lobby_instance.player_spawn.get_path()
 	lobby_instance.start_game_pressed.connect(_on_start_game_pressed)
 
 func _on_start_game_pressed():
 	change_to_level(LEVEL_SCENE)
 	print("Changing to level scene")
 
-func _on_lobby_scene_ready(lobby_instance: LobbyScene):
-	player_spawner.spawn_path = lobby_instance.player_spawn.get_path()
+#Both not used, emitting signal in _ready of scenes is weird
+#func _on_lobby_scene_ready(lobby_instance: LobbyScene):
+	#print("On lobby scene ready called")
+	#player_spawner.spawn_path = lobby_instance.player_spawn.get_path()
+	#print("Player Spawner spawn_path: %s" % player_spawner.spawn_path)
 
-func _on_game_room_ready(game_room_instance: GameRoom):
-	player_spawner.spawn_path = game_room_instance.player_spawn.get_path()
+#func _on_game_room_ready(game_room_instance: GameRoom):
+	#print("On game room ready called")
+	#player_spawner.spawn_path = game_room_instance.player_spawn.get_path()
+	#print("Player Spawner spawn_path: %s" % player_spawner.spawn_path)
