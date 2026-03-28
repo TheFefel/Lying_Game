@@ -43,6 +43,7 @@ func clear_players() -> void:
 	for child: Player in get_children():
 		child.queue_free()
 
+@rpc("authority", "call_local", "reliable")
 func position_players() -> void:
 	var index: int = 0
 	var total_players: int = get_children().size()
