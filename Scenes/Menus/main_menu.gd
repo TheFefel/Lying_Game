@@ -1,3 +1,4 @@
+class_name MainMenu
 extends Control
 
 @onready var main_menu: Control = $"."

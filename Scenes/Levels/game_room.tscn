@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://bu4n2e50i25wu"]
 
-[ext_resource type="Script" uid="uid://dtfri7jgbr575" path="res://Scenes/Levels/game_room.gd" id="1_kig0q"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jb1co"]
 
 [node name="GameRoom" type="Node3D" unique_id=1309680244]
-script = ExtResource("1_kig0q")
 
 [node name="Environment" type="Node3D" parent="." unique_id=660334582]
 
@@ -21,11 +18,3 @@ transform = Transform3D(0.6881773, -0.38802707, -0.61306363, 0, -0.84497267, 0.5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0893211, 0)
 use_collision = true
 sides = 20
-
-[node name="PlayerSpawn" type="Node3D" parent="." unique_id=1621837091]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1573897155]
-_spawnable_scenes = PackedStringArray("uid://bs72ogkvdd7d6")
-spawn_path = NodePath("../PlayerSpawn")
-spawn_limit = 8
