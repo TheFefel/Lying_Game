@@ -15,6 +15,6 @@ material = SubResource("StandardMaterial3D_jb1co")
 transform = Transform3D(0.6881773, -0.38802707, -0.61306363, 0, -0.84497267, 0.5348096, -0.72554255, -0.36804378, -0.581491, 0.0039100647, 6.1581955, 0)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Environment" unique_id=1966976856]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0893211, 0)
+transform = Transform3D(1, 0, 0, 0, 0.22485061, 0, 0, 0, 1, 0, 0.3048973, 0)
 use_collision = true
 sides = 20
