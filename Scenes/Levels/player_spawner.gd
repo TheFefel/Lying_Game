@@ -53,6 +53,7 @@ func position_players() -> void:
 		player.set_look_at(Vector3.ZERO)
 		player.can_jump = false
 		player.can_move = false
+		index += 1
 
 func get_spawn_position(index: int, total_players_num: int, radius: float = 10.0) -> Vector3:
 	var angle = (2 * PI / total_players_num) * index
