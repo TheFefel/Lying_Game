@@ -18,5 +18,5 @@ func start_lobby():
 
 func _on_start_game_pressed():
 	if multiplayer.is_server():
-		await level_loader.spawn_level('game_room')
+		level_loader.spawn_level.rpc('game_room')
 		player_spawner.position_players()
