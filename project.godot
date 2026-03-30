@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Steamworks="*uid://wfnymfym7kap"
 SteamLobby="*uid://c1gh418naxnmi"
+QuizManager="*uid://ddunhuo11eian"
 
 [debug]
 

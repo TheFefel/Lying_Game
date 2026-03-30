@@ -55,6 +55,8 @@ func position_players() -> void:
 		player.can_move = false
 		index += 1
 
+# Spawn function to let players spawn in a specific way based on the total players
+# 2 players = spawn across from each other, 3 players = spawn in triangle and so on...
 func get_spawn_position(index: int, total_players_num: int, radius: float = 10.0) -> Vector3:
 	var angle = (2 * PI / total_players_num) * index
 	

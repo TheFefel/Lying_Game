@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c1bmx4oubegm4"]
 
-[ext_resource type="Script" uid="uid://cnfa5iawv1061" path="res://Scenes/Levels/lobby.gd" id="1_b7rcr"]
+[ext_resource type="Script" uid="uid://cnfa5iawv1061" path="res://Scripts/LevelScripts/lobby.gd" id="1_b7rcr"]
 [ext_resource type="PackedScene" uid="uid://cvmhi3ooi1iv5" path="res://Scenes/Interact/StartGameButton.tscn" id="2_fmxxw"]
 
 [sub_resource type="Environment" id="Environment_b7rcr"]
