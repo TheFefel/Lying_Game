@@ -1,6 +1,9 @@
 extends Node
 
+signal question_received(question_data)
+
 var questions = []
+var remaining_questions = []
 
 func _ready() -> void:
 	if multiplayer.is_server(): # important, so only the server loads questions
@@ -34,7 +37,28 @@ func parse_questions(content):
 
 # Start the quiz by displaying the first question
 func start_quiz():
-	var question = questions[0] # Get question and answer of said index
-	print(question)
-	print(question["question"]) # Only get question (of index)
-	print(question["answer"]) # Only get answer (of index)
+	#var question = questions[0]: Get question and answer of said index
+	#print(question)
+	#print(question["question"]): Only get question (of index)
+	#print(question["answer"]): Only get answer (of index)
+	if multiplayer.is_server():
+		remaining_questions = questions.duplicate()
+		remaining_questions.shuffle()
+		
+		var current_question = choose_next_question()
+		print("Current question: %s" % current_question["question"])
+		receive_question.rpc(current_question["question"])
+		
+
+# Choose the next question + answer
+func choose_next_question():
+	if remaining_questions.is_empty():
+		print("No remaining questions")
+		return null
+	
+	return remaining_questions.pop_front()
+
+@rpc("authority", "call_local", "reliable")
+func receive_question(question_data):
+	question_received.emit(question_data)
+	print("Emitted question_received with: %s" % question_data)
