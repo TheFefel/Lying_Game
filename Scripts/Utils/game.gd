@@ -20,4 +20,4 @@ func _on_start_game_pressed():
 	if multiplayer.is_server():
 		level_loader.spawn_level.rpc('game_room')
 		player_spawner.position_players.rpc()
-		
+		QuizManager.start_quiz()
