@@ -59,6 +59,8 @@ var freeflying : bool = false
 @onready var question_text: Label = $PlayerUI_3D/SubViewport/Control/BG/QuestionText
 @onready var answer_line_edit: LineEdit = $PlayerUI_3D/SubViewport/Control/BG/AnswerLineEdit
 @onready var submit_answer_button: Button = $PlayerUI_3D/SubViewport/Control/BG/SubmitAnswerButton
+@onready var player_ui_2d: Control = $PlayerUI_2D
+@onready var player_ui_3d: Node3D = $PlayerUI_3D
 
 
 func _enter_tree() -> void:
@@ -74,6 +76,8 @@ func _ready() -> void:
 		QuizManager.question_received.connect(show_question)
 	else:
 		camera_3d.queue_free()
+		player_ui_2d.queue_free()
+		player_ui_3d.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
