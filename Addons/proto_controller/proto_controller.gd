@@ -56,6 +56,10 @@ var freeflying : bool = false
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera_3d: Camera3D = $Head/Camera3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
+@onready var question_text: Label = $PlayerUI_3D/SubViewport/Control/BG/QuestionText
+@onready var answer_line_edit: LineEdit = $PlayerUI_3D/SubViewport/Control/BG/AnswerLineEdit
+@onready var submit_answer_button: Button = $PlayerUI_3D/SubViewport/Control/BG/SubmitAnswerButton
+
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -67,6 +71,7 @@ func _ready() -> void:
 	#camera_3d.current = is_multiplayer_authority()
 	if is_multiplayer_authority():
 		capture_mouse()
+		QuizManager.question_received.connect(show_question)
 	else:
 		camera_3d.queue_free()
 
@@ -85,14 +90,6 @@ func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
 	
-	# If freeflying, handle freefly and nothing else
-	if can_freefly and freeflying:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		var motion := (head.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		motion *= freefly_speed * delta
-		move_and_collide(motion)
-		return
-	
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
@@ -105,7 +102,7 @@ func _physics_process(delta: float) -> void:
 
 	# Modify speed based on sprinting
 	if can_sprint and Input.is_action_pressed(input_sprint):
-			move_speed = sprint_speed
+		move_speed = sprint_speed
 	else:
 		move_speed = base_speed
 
@@ -134,10 +131,15 @@ func rotate_look(rot_input : Vector2):
 	look_rotation.x -= rot_input.y * look_speed
 	look_rotation.x = clamp(look_rotation.x, deg_to_rad(-85), deg_to_rad(85))
 	look_rotation.y -= rot_input.x * look_speed
-	transform.basis = Basis()
-	rotate_y(look_rotation.y)
 	head.transform.basis = Basis()
 	head.rotate_x(look_rotation.x)
+	
+	# Body rotates aswell, but only if the player can move; important for 3D UI
+	if can_move:
+		transform.basis = Basis()
+		rotate_y(look_rotation.y)
+	else:
+		head.rotate_y(look_rotation.y)
 
 func set_look_at(target: Vector3):
 	var dir = (target - global_transform.origin).normalized()
@@ -160,3 +162,6 @@ func capture_mouse():
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
+
+func show_question(question_data):
+	question_text.text = question_data

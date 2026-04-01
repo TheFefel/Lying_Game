@@ -26,6 +26,22 @@ properties/2/path = NodePath("Head:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_62upf"]
+resource_local_to_scene = true
+size = Vector2(5, 3)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_62upf"]
+viewport_path = NodePath("PlayerUI_3D/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64ncp"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_62upf")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62upf"]
+bg_color = Color(0, 0, 0, 0.6862745)
+
 [node name="ProtoController" type="CharacterBody3D" unique_id=2043637533]
 script = ExtResource("1_ucva2")
 input_left = "move_left"
@@ -80,3 +96,77 @@ grow_vertical = 2
 texture = ExtResource("2_mpk8l")
 
 [node name="PlayerUI_3D" type="Node3D" parent="." unique_id=2134038517]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerUI_3D" unique_id=233086935]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2, -3)
+mesh = SubResource("PlaneMesh_62upf")
+surface_material_override/0 = SubResource("StandardMaterial3D_64ncp")
+
+[node name="SubViewport" type="SubViewport" parent="PlayerUI_3D" unique_id=1751064781]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="Control" type="Control" parent="PlayerUI_3D/SubViewport" unique_id=57280650]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Panel" parent="PlayerUI_3D/SubViewport/Control" unique_id=2084784846]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_62upf")
+
+[node name="QuestionText" type="Label" parent="PlayerUI_3D/SubViewport/Control/BG" unique_id=1979304587]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.95
+anchor_bottom = 0.5
+offset_top = -190.0
+offset_bottom = -106.99982
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "Frage hier schreiben"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnswerLineEdit" type="LineEdit" parent="PlayerUI_3D/SubViewport/Control/BG" unique_id=1734395593]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.5
+anchor_right = 0.95
+anchor_bottom = 0.5
+offset_top = 260.0
+offset_bottom = 351.00018
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+placeholder_text = "Antwort..."
+alignment = 1
+
+[node name="SubmitAnswerButton" type="Button" parent="PlayerUI_3D/SubViewport/Control/BG" unique_id=1566520846]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -291.5
+offset_top = -150.0
+offset_right = 291.5
+offset_bottom = -59.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+text = "Antwort abschicken"
