@@ -54,7 +54,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=145346062]
 replication_config = SubResource("SceneReplicationConfig_njsuj")
 
-[node name="PlayerUI" type="Control" parent="." unique_id=109343497]
+[node name="PlayerUI_2D" type="Control" parent="." unique_id=109343497]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -63,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Crosshair" type="TextureRect" parent="PlayerUI" unique_id=1585833268]
+[node name="Crosshair" type="TextureRect" parent="PlayerUI_2D" unique_id=1585833268]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 8
@@ -78,3 +78,5 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_mpk8l")
+
+[node name="PlayerUI_3D" type="Node3D" parent="." unique_id=2134038517]

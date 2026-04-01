@@ -62,11 +62,13 @@ func _enter_tree() -> void:
 	print("Set multiplayer authority to: ", name.to_int())
 
 func _ready() -> void:
-	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
-	camera_3d.current = is_multiplayer_authority()
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	#camera_3d.current = is_multiplayer_authority()
+	if is_multiplayer_authority():
+		capture_mouse()
+	else:
+		camera_3d.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -77,14 +79,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	# Look around
 	if mouse_captured and event is InputEventMouseMotion:
-		rotate_look(event.screen_relative)
-	
-	# Toggle freefly mode
-	if can_freefly and Input.is_action_just_pressed(input_freefly):
-		if not freeflying:
-			enable_freefly()
-		else:
-			disable_freefly()
+		rotate_look(event.relative)
 
 func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority():
@@ -157,16 +152,6 @@ func set_look_at(target: Vector3):
 	head.rotate_x(look_rotation.x)
 
 
-func enable_freefly():
-	collider.disabled = true
-	freeflying = true
-	velocity = Vector3.ZERO
-
-func disable_freefly():
-	collider.disabled = false
-	freeflying = false
-
-
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	mouse_captured = true
@@ -175,29 +160,3 @@ func capture_mouse():
 func release_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	mouse_captured = false
-
-
-## Checks if some Input Actions haven't been created.
-## Disables functionality accordingly.
-func check_input_mappings():
-	if can_move and not InputMap.has_action(input_left):
-		push_error("Movement disabled. No InputAction found for input_left: " + input_left)
-		can_move = false
-	if can_move and not InputMap.has_action(input_right):
-		push_error("Movement disabled. No InputAction found for input_right: " + input_right)
-		can_move = false
-	if can_move and not InputMap.has_action(input_forward):
-		push_error("Movement disabled. No InputAction found for input_forward: " + input_forward)
-		can_move = false
-	if can_move and not InputMap.has_action(input_back):
-		push_error("Movement disabled. No InputAction found for input_back: " + input_back)
-		can_move = false
-	if can_jump and not InputMap.has_action(input_jump):
-		push_error("Jumping disabled. No InputAction found for input_jump: " + input_jump)
-		can_jump = false
-	if can_sprint and not InputMap.has_action(input_sprint):
-		push_error("Sprinting disabled. No InputAction found for input_sprint: " + input_sprint)
-		can_sprint = false
-	if can_freefly and not InputMap.has_action(input_freefly):
-		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
-		can_freefly = false
