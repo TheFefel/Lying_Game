@@ -56,12 +56,15 @@ var freeflying : bool = false
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera_3d: Camera3D = $Head/Camera3D
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
-@onready var question_text: Label = $PlayerUI_3D/SubViewport/Control/BG/QuestionText
-@onready var answer_line_edit: LineEdit = $PlayerUI_3D/SubViewport/Control/BG/AnswerLineEdit
-@onready var submit_answer_button: Button = $PlayerUI_3D/SubViewport/Control/BG/SubmitAnswerButton
+@onready var question_text: Label = $PlayerUI_3D/QASubViewport/Control/BG/QuestionText
+@onready var answer_line_edit: LineEdit = $PlayerUI_3D/QASubViewport/Control/BG/AnswerLineEdit
+@onready var submit_answer_button: Button = $PlayerUI_3D/QASubViewport/Control/BG/SubmitAnswerButton
 @onready var player_ui_2d: Control = $PlayerUI_2D
 @onready var player_ui_3d: Node3D = $PlayerUI_3D
-
+@onready var interact_ray: RayCast3D = $Head/InteractRay
+@onready var question_answer_mesh: MeshInstance3D = $PlayerUI_3D/QuestionAnswerMesh
+@onready var qa_static_body: StaticBody3D = $PlayerUI_3D/QuestionAnswerMesh/QAStaticBody
+@onready var qa_sub_viewport: SubViewport = $PlayerUI_3D/QASubViewport
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -70,7 +73,6 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
-	#camera_3d.current = is_multiplayer_authority()
 	if is_multiplayer_authority():
 		capture_mouse()
 		QuizManager.question_received.connect(show_question)
@@ -78,6 +80,31 @@ func _ready() -> void:
 		camera_3d.queue_free()
 		player_ui_2d.queue_free()
 		player_ui_3d.queue_free()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed():
+		if interact_ray.is_colliding():
+			var ray_collider = interact_ray.get_collider()
+			print("Ray is colliding while inputting")
+			
+			if ray_collider == qa_static_body:
+				print("Ray is colliding with QAMesh while inputting")
+				var hit_pos = interact_ray.get_collision_point()
+				var local_pos = ray_collider.to_local(hit_pos)
+				var mesh_scale = question_answer_mesh.scale
+				var uv = Vector2((local_pos.x / mesh_scale.x) + 0.5, (-local_pos.y / mesh_scale.y) + 0.5)
+				print("UV: %s" % uv)
+				var viewport_size = Vector2(qa_sub_viewport.size)
+				var screen_pos = uv * viewport_size
+				
+				var click_event = InputEventMouseButton.new()
+				click_event.position = screen_pos
+				click_event.global_position = screen_pos
+				click_event.pressed = true
+				click_event.button_index = MOUSE_BUTTON_LEFT
+				click_event.button_mask = MOUSE_BUTTON_MASK_LEFT
+				
+				qa_sub_viewport.push_input(click_event)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
