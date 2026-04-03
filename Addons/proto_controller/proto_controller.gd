@@ -64,6 +64,8 @@ var freeflying : bool = false
 @onready var player_ui_3d: Node3D = $PlayerUI_3D
 @onready var qa_ui: Control = $PlayerUI_2D/QA_UI
 @onready var interact_ray: RayCast3D = $Head/InteractRay
+@onready var answers_ui: Control = $PlayerUI_2D/Answers_UI
+@onready var answer_grid_container: GridContainer = $PlayerUI_2D/Answers_UI/BG/AnswerGridContainer
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -75,6 +77,7 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		capture_mouse()
 		QuizManager.question_received.connect(show_question)
+		QuizManager.answers_received.connect(show_answers)
 	else:
 		camera_3d.queue_free()
 		player_ui_2d.queue_free()
@@ -174,11 +177,35 @@ func show_question(question_data):
 	qa_ui.show()
 	question_text.text = question_data
 
-
 func _on_submit_answer_button_pressed() -> void:
 	print("Submit answer button was pressed")
 	if answer_line_edit.text != null:
 		QuizManager.submit_answer.rpc_id(1, multiplayer.get_unique_id(), answer_line_edit.text)
 		print("Submitted answer for peer %s" % multiplayer.get_unique_id())
+		capture_mouse()
+		qa_ui.hide()
+		crosshair.show()
 	else:
 		print("No text in line edit")
+
+func show_answers(answers_data: Dictionary):
+	release_mouse()
+	crosshair.hide()
+	answers_ui.show()
+	
+	for child in answer_grid_container.get_children():
+		child.queue_free()
+	
+	for key in answers_data.keys():
+		var button = Button.new()
+		button.text = answers_data[key]
+		button.add_theme_font_size_override("font", 40)
+		button.pressed.connect(_on_answer_clicked.bind(answers_data[key]))
+		
+		answer_grid_container.add_child(button)
+
+func _on_answer_clicked(answer):
+	print("Clicked on: %s" % answer)
+	capture_mouse()
+	answers_ui.hide()
+	crosshair.show()

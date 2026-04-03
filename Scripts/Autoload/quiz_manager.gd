@@ -1,6 +1,7 @@
 extends Node
 
 signal question_received(question_data)
+signal answers_received(answers_data)
 
 var questions = []
 var remaining_questions = []
@@ -72,4 +73,9 @@ func submit_answer(player_id, answer):
 	
 	# Check if all answers have been collected; -1 because of the right answer we added before
 	if (answers.size() - 1) == total_players: 
-		print(answers)
+		receive_answers.rpc(answers)
+
+@rpc("authority", "call_local", "reliable")
+func receive_answers(answers_data):
+	answers_received.emit.call_deferred(answers_data) # call_deferred important because of the timing
+	print("Emitted answers_received")
