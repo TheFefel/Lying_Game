@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://camic8fc5ul6v" path="res://Addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="PackedScene" uid="uid://dju435mehge8t" path="res://Scenes/Interact/interact_ray.tscn" id="2_62upf"]
 [ext_resource type="Texture2D" uid="uid://b8mx2hnjkoyib" path="res://Assets/kenney_crosshair_pack/PNG/White/crosshair037.png" id="2_mpk8l"]
+[ext_resource type="Script" uid="uid://dtb4ko7nojs50" path="res://Scripts/UI/player_ui_3d.gd" id="4_64ncp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iof21"]
 albedo_color = Color(0.91806, 0.575202, 0.222449, 1)
@@ -26,6 +27,9 @@ properties/2/path = NodePath("Head:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_64ncp"]
+bg_color = Color(0, 0, 0, 0.5882353)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_62upf"]
 resource_local_to_scene = true
 size = Vector2(5, 3)
@@ -40,7 +44,7 @@ shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_62upf")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_62upf"]
-size = Vector3(5, 0.001, 3)
+size = Vector3(5, 0.01, 3)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62upf"]
 bg_color = Color(0, 0, 0, 0.6862745)
@@ -98,16 +102,90 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_mpk8l")
 
+[node name="QA_UI" type="Control" parent="PlayerUI_2D" unique_id=981934393]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 230.0
+offset_top = 130.0
+offset_right = -250.0
+offset_bottom = -140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="Panel" parent="PlayerUI_2D/QA_UI" unique_id=1071902859]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_64ncp")
+
+[node name="QuestionText" type="Label" parent="PlayerUI_2D/QA_UI/BG" unique_id=1758418935]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 50.0
+offset_top = -140.0
+offset_right = -50.0
+offset_bottom = -56.999634
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Frage hier"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnswerLineEdit" type="LineEdit" parent="PlayerUI_2D/QA_UI/BG" unique_id=945644542]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 110.0
+offset_top = 145.0
+offset_right = -110.0
+offset_bottom = 236.00061
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+placeholder_text = "Antwort..."
+alignment = 1
+
+[node name="SubmitAnswerButton" type="Button" parent="PlayerUI_2D/QA_UI/BG" unique_id=458319980]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 545.0
+offset_top = -130.0
+offset_right = -545.0
+offset_bottom = -52.99951
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Antwort abschicken"
+
 [node name="PlayerUI_3D" type="Node3D" parent="." unique_id=2134038517]
+visible = false
+script = ExtResource("4_64ncp")
 
 [node name="QuestionAnswerMesh" type="MeshInstance3D" parent="PlayerUI_3D" unique_id=233086935]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 2, -3)
 mesh = SubResource("PlaneMesh_62upf")
 surface_material_override/0 = SubResource("StandardMaterial3D_64ncp")
 
-[node name="QAStaticBody" type="StaticBody3D" parent="PlayerUI_3D/QuestionAnswerMesh" unique_id=578460981]
+[node name="QA_Area" type="Area3D" parent="PlayerUI_3D/QuestionAnswerMesh" unique_id=568967952]
+input_capture_on_drag = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerUI_3D/QuestionAnswerMesh/QAStaticBody" unique_id=503313840]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerUI_3D/QuestionAnswerMesh/QA_Area" unique_id=932354893]
 shape = SubResource("BoxShape3D_62upf")
 
 [node name="QASubViewport" type="SubViewport" parent="PlayerUI_3D" unique_id=1751064781]
@@ -178,3 +256,5 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 60
 text = "Antwort abschicken"
+
+[connection signal="pressed" from="PlayerUI_2D/QA_UI/BG/SubmitAnswerButton" to="." method="_on_submit_answer_button_pressed"]

@@ -4,6 +4,8 @@ signal question_received(question_data)
 
 var questions = []
 var remaining_questions = []
+var answers: Dictionary = {}
+var total_players = 0
 
 func _ready() -> void:
 	if multiplayer.is_server(): # important, so only the server loads questions
@@ -42,13 +44,14 @@ func start_quiz():
 	#print(question["question"]): Only get question (of index)
 	#print(question["answer"]): Only get answer (of index)
 	if multiplayer.is_server():
+		total_players = multiplayer.get_peers().size() + 1
 		remaining_questions = questions.duplicate()
 		remaining_questions.shuffle()
 		
 		var current_question = choose_next_question()
 		print("Current question: %s" % current_question["question"])
 		receive_question.rpc(current_question["question"])
-		
+		answers[0] = current_question["answer"]
 
 # Choose the next question + answer
 func choose_next_question():
@@ -62,3 +65,13 @@ func choose_next_question():
 func receive_question(question_data):
 	question_received.emit(question_data)
 	print("Emitted question_received with: %s" % question_data)
+
+@rpc("authority", "call_local", "reliable")
+func submit_answer(player_id, answer):
+	print("Called submit_answer")
+	answers[player_id] = answer
+	print("Total answers: ", answers.size(), ", total players: ", total_players)
+	
+	# Check if all answers have been collected; -1 because of the right answer we added before
+	if (answers.size() - 1) == total_players: 
+		print(answers)
