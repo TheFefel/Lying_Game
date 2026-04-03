@@ -66,11 +66,9 @@ func receive_question(question_data):
 	question_received.emit(question_data)
 	print("Emitted question_received with: %s" % question_data)
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func submit_answer(player_id, answer):
-	print("Called submit_answer")
 	answers[player_id] = answer
-	print("Total answers: ", answers.size(), ", total players: ", total_players)
 	
 	# Check if all answers have been collected; -1 because of the right answer we added before
 	if (answers.size() - 1) == total_players: 
