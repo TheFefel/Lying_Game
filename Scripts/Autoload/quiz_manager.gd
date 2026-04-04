@@ -5,6 +5,9 @@ signal answers_received(answers_data)
 
 var questions = []
 var remaining_questions = []
+var current_question_pair
+var current_question
+var current_answer
 var answers: Dictionary = {}
 var total_players = 0
 
@@ -49,10 +52,12 @@ func start_quiz():
 		remaining_questions = questions.duplicate()
 		remaining_questions.shuffle()
 		
-		var current_question = choose_next_question()
-		print("Current question: %s" % current_question["question"])
-		receive_question.rpc(current_question["question"])
-		answers[0] = current_question["answer"]
+		current_question_pair = choose_next_question()
+		current_question = current_question_pair["question"]
+		current_answer = current_question_pair["answer"]
+		print("Current question: %s" % current_question)
+		receive_question.rpc(current_question)
+		answers[0] = current_answer
 
 # Choose the next question + answer
 func choose_next_question():
@@ -73,9 +78,9 @@ func submit_answer(player_id, answer):
 	
 	# Check if all answers have been collected; -1 because of the right answer we added before
 	if (answers.size() - 1) == total_players: 
-		receive_answers.rpc(answers)
+		receive_answers.rpc(answers, current_question)
 
 @rpc("authority", "call_local", "reliable")
-func receive_answers(answers_data):
-	answers_received.emit.call_deferred(answers_data) # call_deferred important because of the timing
+func receive_answers(answers_data, question):
+	answers_received.emit.call_deferred(answers_data, question) # call_deferred important because of the timing
 	print("Emitted answers_received")

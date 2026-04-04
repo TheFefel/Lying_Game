@@ -66,6 +66,7 @@ var freeflying : bool = false
 @onready var interact_ray: RayCast3D = $Head/InteractRay
 @onready var answers_ui: Control = $PlayerUI_2D/Answers_UI
 @onready var answer_grid_container: GridContainer = $PlayerUI_2D/Answers_UI/BG/AnswerGridContainer
+@onready var question_text_2: Label = $PlayerUI_2D/Answers_UI/BG/QuestionText2
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -188,10 +189,11 @@ func _on_submit_answer_button_pressed() -> void:
 	else:
 		print("No text in line edit")
 
-func show_answers(answers_data: Dictionary):
+func show_answers(answers_data: Dictionary, current_question):
 	release_mouse()
 	crosshair.hide()
 	answers_ui.show()
+	question_text_2.text = current_question
 	
 	for child in answer_grid_container.get_children():
 		child.queue_free()
@@ -199,7 +201,7 @@ func show_answers(answers_data: Dictionary):
 	for key in answers_data.keys():
 		var button = Button.new()
 		button.text = answers_data[key]
-		button.add_theme_font_size_override("font", 40)
+		button.add_theme_font_size_override("font_size", 30)
 		button.pressed.connect(_on_answer_clicked.bind(answers_data[key]))
 		
 		answer_grid_container.add_child(button)

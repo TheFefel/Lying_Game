@@ -214,6 +214,7 @@ theme_override_font_sizes/font_size = 40
 text = "Frage hier"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="AnswerGridContainer" type="GridContainer" parent="PlayerUI_2D/Answers_UI/BG" unique_id=759266066]
 layout_mode = 1
