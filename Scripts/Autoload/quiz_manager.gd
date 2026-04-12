@@ -84,3 +84,8 @@ func submit_answer(player_id, answer):
 func receive_answers(answers_data, question):
 	answers_received.emit.call_deferred(answers_data, question) # call_deferred important because of the timing
 	print("Emitted answers_received")
+
+@rpc("authority", "call_local", "reliable")
+func submit_answer_choice(answer, answer_player_id):
+	var choice_player_id = multiplayer.get_remote_sender_id()
+	print("The player %s" % choice_player_id, " chose the answer '%s'" % answer, " by player %s" % answer_player_id)

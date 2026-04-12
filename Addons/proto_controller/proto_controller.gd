@@ -202,12 +202,12 @@ func show_answers(answers_data: Dictionary, current_question):
 		var button = Button.new()
 		button.text = answers_data[key]
 		button.add_theme_font_size_override("font_size", 30)
-		button.pressed.connect(_on_answer_clicked.bind(answers_data[key]))
+		button.pressed.connect(_on_answer_clicked.bind(answers_data[key], key))
 		
 		answer_grid_container.add_child(button)
 
-func _on_answer_clicked(answer):
-	print("Clicked on: %s" % answer)
+func _on_answer_clicked(answer, answer_player_id):
 	capture_mouse()
 	answers_ui.hide()
 	crosshair.show()
+	QuizManager.submit_answer_choice.rpc_id(1, answer, answer_player_id)
