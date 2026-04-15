@@ -76,7 +76,7 @@ func receive_question(question_data):
 	question_received.emit(question_data)
 	print("Emitted question_received with: %s" % question_data)
 
-# RPC call for submitting your own answer
+# RPC for submitting your own answer
 @rpc("any_peer", "call_local", "reliable")
 func submit_answer(player_id, answer):
 	answers[player_id] = answer
@@ -85,13 +85,13 @@ func submit_answer(player_id, answer):
 	if (answers.size() - 1) == total_players: 
 		receive_answers.rpc(answers, current_question)
 
-# RPC call for sending the choosable answers to each client
+# RPC for sending the choosable answers to each client
 @rpc("authority", "call_local", "reliable")
 func receive_answers(answers_data, question):
 	answers_received.emit.call_deferred(answers_data, question) # call_deferred important because of the timing
 	print("Emitted answers_received")
 
-# RPC call for choosing an answer and handle it
+# RPC for choosing an answer and handle it
 @rpc("any_peer", "call_local", "reliable")
 func submit_answer_choice(answer, answer_player_id):
 	var choice_player_id = multiplayer.get_remote_sender_id()
