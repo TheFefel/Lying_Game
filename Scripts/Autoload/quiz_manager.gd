@@ -9,6 +9,7 @@ var current_question_pair
 var current_question
 var current_answer
 var answers: Dictionary = {}
+var answer_choices: Dictionary = {}
 var total_players = 0
 
 func _ready() -> void:
@@ -57,6 +58,8 @@ func start_quiz():
 		current_answer = current_question_pair["answer"]
 		print("Current question: %s" % current_question)
 		receive_question.rpc(current_question)
+		
+		# Dictionary is structured as key = player who submitted answer, value = answer
 		answers[0] = current_answer
 
 # Choose the next question + answer
@@ -67,11 +70,13 @@ func choose_next_question():
 	
 	return remaining_questions.pop_front()
 
+# RPC call for sending the question to each client
 @rpc("authority", "call_local", "reliable")
 func receive_question(question_data):
 	question_received.emit(question_data)
 	print("Emitted question_received with: %s" % question_data)
 
+# RPC call for submitting your own answer
 @rpc("any_peer", "call_local", "reliable")
 func submit_answer(player_id, answer):
 	answers[player_id] = answer
@@ -80,12 +85,21 @@ func submit_answer(player_id, answer):
 	if (answers.size() - 1) == total_players: 
 		receive_answers.rpc(answers, current_question)
 
+# RPC call for sending the choosable answers to each client
 @rpc("authority", "call_local", "reliable")
 func receive_answers(answers_data, question):
 	answers_received.emit.call_deferred(answers_data, question) # call_deferred important because of the timing
 	print("Emitted answers_received")
 
-@rpc("authority", "call_local", "reliable")
+# RPC call for choosing an answer and handle it
+@rpc("any_peer", "call_local", "reliable")
 func submit_answer_choice(answer, answer_player_id):
 	var choice_player_id = multiplayer.get_remote_sender_id()
 	print("The player %s" % choice_player_id, " chose the answer '%s'" % answer, " by player %s" % answer_player_id)
+	
+	# Dictionary is structured as key = who chose this answer, value = by who is this answer 
+	answer_choices[choice_player_id] = answer_player_id
+	
+	# Check if all choices have been collected
+	if answer_choices.size() == total_players:
+		print("This is how the players chose: %s" % answer_choices)
