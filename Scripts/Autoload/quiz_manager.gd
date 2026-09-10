@@ -77,8 +77,13 @@ func receive_question(question_data):
 	print("Emitted question_received with: %s" % question_data)
 
 # RPC for submitting your own answer
-@rpc("any_peer", "call_local", "reliable")
-func submit_answer(player_id, answer):
+@rpc("any_peer", "call_remote", "reliable")
+func submit_answer(answer):
+	if not multiplayer.is_server():
+		return
+	
+	var player_id = multiplayer.get_remote_sender_id()
+	
 	answers[player_id] = answer
 	
 	# Check if all answers have been collected; -1 because of the right answer we added before
@@ -92,8 +97,11 @@ func receive_answers(answers_data, question):
 	print("Emitted answers_received")
 
 # RPC for choosing an answer and handle it
-@rpc("any_peer", "call_local", "reliable")
+@rpc("any_peer", "call_remote", "reliable")
 func submit_answer_choice(answer, answer_player_id):
+	if not multiplayer.is_server():
+		return
+	
 	var choice_player_id = multiplayer.get_remote_sender_id()
 	print("The player %s" % choice_player_id, " chose the answer '%s'" % answer, " by player %s" % answer_player_id)
 	

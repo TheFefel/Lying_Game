@@ -29,6 +29,7 @@ func spawn_player(id: int) -> void:
 	add_child.call_deferred(player)
 	await player.tree_entered
 	player.owner = self
+	player.set_multiplayer_authority(id)
 
 
 func remove_player(id: int) -> void:

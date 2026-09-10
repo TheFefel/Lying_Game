@@ -181,7 +181,7 @@ func show_question(question_data):
 func _on_submit_answer_button_pressed() -> void:
 	print("Submit answer button was pressed")
 	if answer_line_edit.text != null:
-		QuizManager.submit_answer.rpc_id(1, multiplayer.get_unique_id(), answer_line_edit.text)
+		QuizManager.submit_answer.rpc_id(1, answer_line_edit.text)
 		print("Submitted answer for peer %s" % multiplayer.get_unique_id())
 		capture_mouse()
 		qa_ui.hide()
